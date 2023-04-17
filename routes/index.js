@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const User = require('../modules/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -32,6 +33,19 @@ router.get('/register', function(req, res, next) {
 
 router.get('/services', function(req, res, next) {
   res.render('services', { title: 'Services' });
+});
+
+router.post('/register1', function(req, res, next) {
+  //console.log(req.body);
+  const { FirstName, LastName, Username, EmailAddress, Password } = req.body;
+  const newUser = new User({displayName: FirstName + " " + LastName, username: Username, password: Password, emailAddress: EmailAddress});
+  try {
+    const user = newUser.save();
+    res.status(200).json(user)
+  }
+  catch (error) {
+    res.status(400).json({message: error.message})
+  }
 });
 
 module.exports = router;

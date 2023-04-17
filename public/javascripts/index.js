@@ -55,6 +55,7 @@ function errorMessageDiv() {
     //Variable declarations for the required validation fields using jquery
     var firstName = $("#firstNameInput").val()
     var lastName = $("#lastNameInput").val()
+    var username = $("#usernameInput").val();
     var email = $("#emailInput").val()
     var password = $("#passwordInput").val()
     var confirmPassword = $("#confirmPasswordInput").val()
@@ -84,10 +85,20 @@ function errorMessageDiv() {
      * Once the output happens clear the input fields. Nothing was specified for username so for the sake of 
      * the constructor, we are using the email as the username */
     if (!error) {
-        var user = new User(firstName, lastName, email, email, password)
-        console.log(user)
 
-        $("#registerForm")[0].reset()
+        const params = {
+            FirstName: firstName,
+            LastName: lastName,
+            Username: username,
+            EmailAddress: email,
+            Password: password
+        };
+        $.post('/register1', params).done(function(data){
+            alert("User Successfully Created!");
+            window.location = '/login';
+        });
+
+        //$("#registerForm")[0].reset()
     }
 }
 

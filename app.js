@@ -3,7 +3,32 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
+var dotenv = require('dotenv');
+const result = dotenv.config();
+
+mongoose.connect(result.parsed.DB_URI);
+var db = mongoose.connection;
+
+//MongoDB Schemas
+const contactSchema = mongoose.Schema({
+  name: String,
+  phoneNumber: String,
+  emailAddress: String
+})
+
+
+//MongoDB Models
+
+const contact = mongoose.model('Contact',contactSchema);
+
+
+//console.log(result.parsed.DB_URI);
+
+// db.once('open',function(){
+//   var newContact = new contact({ name: 'Bob', phoneNumber: '905-905-9059', emailAddress: 'bob@gmail.com'});
+//   newContact.save();
+// });
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,7 +43,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/', indexRouter);
 app.use('/about', indexRouter);
@@ -27,6 +52,7 @@ app.use('/login', indexRouter);
 app.use('/products', indexRouter);
 app.use('/projects', indexRouter);
 app.use('/register', indexRouter);
+app.use('/register1', indexRouter);
 app.use('/services', indexRouter);
 app.use('/users', usersRouter);
 
@@ -45,5 +71,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
