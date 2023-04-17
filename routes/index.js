@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../modules/user');
+const Contact = require('../modules/contact');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -46,6 +47,19 @@ router.post('/register1', function(req, res, next) {
   catch (error) {
     res.status(400).json({message: error.message})
   }
+});
+
+router.post('/login1', function(req, res, next) {
+  //console.log(req.body);
+  const { FirstName, LastName, Username, EmailAddress, Password } = req.body;
+  User.find(function(err, user){
+    if(err){
+      console.error("Username or password incorrect.");
+    }
+    console.log(user);
+  });
+  
+  
 });
 
 module.exports = router;

@@ -10,26 +10,6 @@ const result = dotenv.config();
 mongoose.connect(result.parsed.DB_URI);
 var db = mongoose.connection;
 
-//MongoDB Schemas
-const contactSchema = mongoose.Schema({
-  name: String,
-  phoneNumber: String,
-  emailAddress: String
-})
-
-
-//MongoDB Models
-
-const contact = mongoose.model('Contact',contactSchema);
-
-
-//console.log(result.parsed.DB_URI);
-
-// db.once('open',function(){
-//   var newContact = new contact({ name: 'Bob', phoneNumber: '905-905-9059', emailAddress: 'bob@gmail.com'});
-//   newContact.save();
-// });
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -49,6 +29,7 @@ app.use('/', indexRouter);
 app.use('/about', indexRouter);
 app.use('/contact', indexRouter);
 app.use('/login', indexRouter);
+app.use('/login1', indexRouter);
 app.use('/products', indexRouter);
 app.use('/projects', indexRouter);
 app.use('/register', indexRouter);

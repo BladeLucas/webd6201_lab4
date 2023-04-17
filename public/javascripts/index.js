@@ -102,6 +102,21 @@ function errorMessageDiv() {
     }
 }
 
+function loginFunction(){
+    var username = $("#usernameInput").val()
+    var password = $("#passwordInput").val()
+
+    const params = {
+        Username: username,
+        Password: password
+    }
+    $.post("/login1", params).done(function(data){
+        displayNameInNav();
+        window.location = '/';
+    });
+
+}
+
 //Imediately invoked functions
 (function () {
     //Adds an event listener that will prevent the default function of the submit button
